@@ -1,12 +1,18 @@
-Docker Wordpress MySql Demo
-===========================
+Docker Wordpress Init Demo
+==========================
 
-通过docker-compose将多个docker images（wordpress, mysql, phpMyAdmin) 组合起来，
-搭建一个本地的快速开发wordpress环境。
+把`add_action('init', ...)`放在wp-config.php的最后不起作用：
 
-本地`WordPress-5.3.2`中的文件将被映射到docker container里，我们的修改刷新浏览器后马上可以看到效果。
+1. `add_action`是在`plugin.php`中定义的
+2. `do_action('init', ...)`是在`wp-settings.php`中执行的
+3. `wp-config.php`中`require_once( ABSPATH . 'wp-settings.php' )`时，会执行完所有操作，所以在它后面执行`add_action`不起作用
 
-`docker-entrypoint-initdb.d`下是sql的初始化文件，启动时会自动使用它来初始化数据库
+应该把这样的代码放在`functions.php`或者其它合适的地方。 
+
+修改过的文件：
+
+1. `WordPress-5.3.2/test.php`
+2. `WordPress-5.3.2/wp-includes/functions.php`
 
 ```
 npm run up
