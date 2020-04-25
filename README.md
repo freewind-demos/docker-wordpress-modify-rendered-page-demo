@@ -1,16 +1,13 @@
-Docker Wordpress Init Demo
+Docker Wordpress Modify Rendered Page Demo
 ==========================
 
-把`add_action('init', ...)`放在wp-config.php的最后不起作用：
+通过`add_filter('the_content', ...)`来获取并修改一个post的内容。
 
-1. `add_action`是在`plugin.php`中定义的
-2. `do_action('init', ...)`是在`wp-settings.php`中执行的
-3. `wp-config.php`中`require_once( ABSPATH . 'wp-settings.php' )`时，会执行完所有操作，所以在它后面执行`add_action`不起作用
+http://localhost:20080/?page_id=2
 
-应该把这样的代码放在`functions.php`或者其它合适的地方。 
+可以看到第一句话变成了红色。
 
 修改过的文件：
-
 1. `WordPress-5.3.2/test.php`
 2. `WordPress-5.3.2/wp-includes/functions.php`
 
